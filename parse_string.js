@@ -26,6 +26,11 @@ const parse_string = function parse_string(str="", toks=null) {
 			else tok_entpts.set(c, [v, toks[i]]);
 		} else tok_entpts.set(c, toks[i]);
 	}
+	for(const t of tok_entpts.values())
+		if(t instanceof Array) t.sort((x=null, y=null) => {
+			[x, y] = [x ?? "", y ?? ""];
+			return (y.length - x.length) || x.localeCompare(y);
+		});
 	
 	for(let i = 0; i < str.length; i++) {
 		const c = str[i];

@@ -16,7 +16,7 @@ const parse_string = function parse_string(
 		str.length <= 0 ||
 		(toks ?? null) === null ||
 		toks.length <= 0
-	) return new Array();
+	) return new Array<string|symbol>();
 	
 	let parsed_array:Array<string|symbol> = new Array();
 	let tok_entpts:Map<string, string[]|string> = new Map();
@@ -29,7 +29,7 @@ const parse_string = function parse_string(
 		} else tok_entpts.set(t[0], t);
 	}
 	for(const t of tok_entpts.values())
-		if(t instanceof Array) t.sort((x=null, y=null) => {
+		if(t instanceof Array) t.sort((x:string=null, y:string=null) => {
 			[x, y] = [x ?? "", y ?? ""];
 			return (y.length - x.length) || x.localeCompare(y);
 		});

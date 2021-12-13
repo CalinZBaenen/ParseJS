@@ -19,12 +19,12 @@ const parse_string = function parse_string(str="", toks=null) {
 	let parsed_array = new Array();
 	let tok_entpts = new Map();
 	for(let i = 0; i < toks.length; i++) {
-		const c = toks[i][0];
-		if(tok_entpts.has(c)) {
-			const v = tok_entpts.get(c);
-			if(v instanceof Array) v.push( toks[i] );
-			else tok_entpts.set(c, [v, toks[i]]);
-		} else tok_entpts.set(c, toks[i]);
+		const t = toks[i];
+		if(tok_entpts.has(t[0])) {
+			const v = tok_entpts.get(t[0]);
+			if(v instanceof Array) v.push( t );
+			else tok_entpts.set(c, [v, t]);
+		} else tok_entpts.set(c, t);
 	}
 	for(const t of tok_entpts.values())
 		if(t instanceof Array) t.sort((x=null, y=null) => {

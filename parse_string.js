@@ -44,14 +44,16 @@ const parse_string = function parse_string(str="", toks=null) {
 					i += v.length-1;
 				} else parsed_array.push(c);
 			}
-			if(v instanceof Array) for(const tok of v) {
+			if(v instanceof Array) for(let i2 = 0; i2 < v.length; i2++) {
+				const tok = v[i2];
+				
 				const slc = str.slice(i, i+tok.length);
 				const tvs = slc === tok;
 				if(tvs) {
 					parsed_array.push( Symbol.for(tok) );
 					i += tok.length-1;
 					break;
-				} else parsed_array.push(c);
+				} else if(i2 >= v.length-1) parsed_array.push(c);
 			};
 		} else parsed_array.push(c);
 	}

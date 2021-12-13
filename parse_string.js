@@ -23,8 +23,8 @@ const parse_string = function parse_string(str="", toks=null) {
 		if(tok_entpts.has(t[0])) {
 			const v = tok_entpts.get(t[0]);
 			if(v instanceof Array) v.push( t );
-			else tok_entpts.set(c, [v, t]);
-		} else tok_entpts.set(c, t);
+			else tok_entpts.set(t[0], [v, t]);
+		} else tok_entpts.set(t[0], t);
 	}
 	for(const t of tok_entpts.values())
 		if(t instanceof Array) t.sort((x=null, y=null) => {

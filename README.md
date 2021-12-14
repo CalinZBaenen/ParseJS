@@ -4,6 +4,15 @@ Currently, ParseJS (and ParseTS) remain \*mostly\* complete.
 
 
 
+## Installation.
+The developers suggested method of installation is by downloading the contents of the repo into a zip, and extracting them.  
+But, if you don't want to have tbe file on your drive, you can use the CDN (Content Delivery Network) script import: 
+```html
+<script src="https://cdn.jsdelivr.net/gh/CalinZBaenen/ParseJS@main/parse_string.js"></script>
+```
+
+
+
 ## Description.
 ### English.
 The `parse_string` function of ParseJS takes in a block of text, and a list of keywords (tokens\*) and scans the text you provided letter by letter and returns a list.  

@@ -34,7 +34,7 @@ If a valid keyword is found, a `symbol` (`Symbol.for( tok )`) is inserted into `
 So, we have this code. - Let's try to explain what's going on, and why we get the output we do.
 ```javascript
 // We tell `parse_string` that we want it to read "Knuckles, Tails, Amy, Sonic", but only
-// search for "Sonic", "Tails", "Knuckles".
+// search for "Sonic", "Tails", and "Knuckles".
 parse_string("Knuckles, Tails, Amy, Sonic", [
   "Sonic", // "Sonic" is a keyword because it is included in this list.
   "Tails", // Same for "Tails".

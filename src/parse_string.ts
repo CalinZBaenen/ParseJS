@@ -29,7 +29,7 @@ const parse_string = function parse_string(
 		} else tok_entpts.set(t[0], t);
 	}
 	for(const t of tok_entpts.values())
-		if(t instanceof Array) t.sort((x:string=null, y:string=null) => {
+		if(t instanceof Array) t.sort((x:string|null=null, y:string|null=null) => {
 			[x, y] = [x ?? "", y ?? ""];
 			return (y.length - x.length) || x.localeCompare(y);
 		});

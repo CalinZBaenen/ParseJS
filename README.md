@@ -5,7 +5,7 @@ Currently, ParseJS (and ParseTS) remain \*mostly\* complete.
 
 
 ## Installation.
-The developers suggested method of installation is by downloading the contents of the repo into a zip, and extracting them.  
+The developer's suggested method of installation is by downloading the contents of the repo into a zip, and extracting them.  
 But, if you don't want to have tbe file on your drive, you can use the CDN (Content Delivery Network) script import: 
 ```html
 <script src="https://cdn.jsdelivr.net/gh/CalinZBaenen/ParseJS@main/src/parse_string.js"></script>

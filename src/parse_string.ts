@@ -10,7 +10,7 @@
 * @return A list representing the scanner's findings.
 */
 const parse_string = function parse_string(
-	str:string="", toks:Array<string>=null
+	str:string="", toks:Array<string>|null=null
 ):Array<string|symbol> {
 	if(
 		str.length <= 0 ||

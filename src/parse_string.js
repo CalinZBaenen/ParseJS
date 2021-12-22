@@ -7,9 +7,10 @@
 * used instead.
 * @param {string} str The string to scan.
 * @param {string[]} toks A list of possible tokens to find.
+* @param {boolean} iukwc Whether or not to include the left-over characters in the lexed array.
 * @return {(string|symbol)[]} A list representing the scanner's findings.
 */
-const parse_string = function parse_string(str="", toks=null) {
+const parse_string = function parse_string(str="", toks=null, iukwc=true) {
 	if(
 		str.length <= 0 ||
 		(toks ?? null) === null ||
@@ -55,7 +56,7 @@ const parse_string = function parse_string(str="", toks=null) {
 					break;
 				} else if(i2 >= v.length-1) parsed_array.push(c);
 			};
-		} else parsed_array.push(c);
+		} else if(iukwc) parsed_array.push(c);
 	}
 	
 	return parsed_array;

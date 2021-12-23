@@ -6,7 +6,7 @@
 * the token is inserted, otherwise the current character is
 * used instead.
 * @param {string} str The string to scan.
-* @param {string[]} toks A list of possible tokens to find.
+* @param {(string|symbol)[]} toks A list of possible tokens to find.
 * @param {boolean} iukwc Whether or not to include the left-over characters in the lexed array.
 * @return {(string|symbol)[]} A list representing the scanner's findings.
 */
@@ -20,7 +20,12 @@ const parse_string = function parse_string(str="", toks=null, iukwc=true) {
 	let parsed_array = new Array();
 	let tok_entpts = new Map();
 	for(let i = 0; i < toks.length; i++) {
-		const t = toks[i];
+		const t = (
+			(typeof toks[i] === "symbol") ?
+			String(toks[i].description ?? "") :
+			toks[i]
+		);
+		if(t.length <= 0) continue;
 		if(tok_entpts.has(t[0])) {
 			const v = tok_entpts.get(t[0]);
 			if(v instanceof Array) v.push( t );

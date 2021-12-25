@@ -94,10 +94,10 @@ Since `test12` is longer than `test1` or `test`, it takes precedents. I.e. `pars
 
 ### Cleaning up the clutter!
 As of the latest patch; 0.051, you can remove the extra letters from the returned list.  
-It turns THIS output: 
-![Sonic's test has some left over letters. - `example.png`](./example.png)
-into THIS output:
-![Sonic's test only leaves the symbols behind. - `example3.png`](./example3.png)
+It turns THIS output:  
+![Sonic's test has some left over letters. - `example.png`](./example.png)  
+into THIS output:  
+![Sonic's test only leaves the symbols behind. - `example3.png`](./example3.png)  
 
 So... How do we get this cleaner output?  
 Well, when you pass in your text and the keywords you want to find, you can also pass in a boolean (a yes or no value) that indicates if you want to keep the clutter.  For backwards compatibility, this option is `true` (yes\*) by default.

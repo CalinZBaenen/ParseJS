@@ -2,6 +2,9 @@
 ParseJS is a simple library I made (and bug-fixed) in the span of two (2) days.
 Currently, ParseJS (and ParseTS) remain \*mostly\* complete.
 
+### Example in action.
+For an example of how you could use this library, check out this [Brain\*\*\*\* interpreter](https://code.sololearn.com/WMO3B752fdOj) I made on [SoloLearn](https://www.sololearn.com/)'s Web-Development [code playground](https://www.wiliam.com.au/wiliam-blog/code-playgrounds).
+
 
 
 ## Installation.
@@ -89,7 +92,15 @@ Then, we arrange candidates in dictionary order. For this case, it doesn't chang
 So. Now what? Well, let's scan ahead, if the next characters are `est1`, then we could use `test1`. - BUT, if  the next characters are `est12`, we could use `test12`.  
 Since `test12` is longer than `test1` or `test`, it takes precedents. I.e. `parse_string` prefers this longer token because it's more confident this prediction is correct.
 
+### Cleaning up the clutter!
+As of the latest patch; 0.051, you can remove the extra letters from the returned list.  
+It turns THIS output: 
+![Sonic's test has some left over letters. - `example.png`](./example.png)
+into THIS output:
+![Sonic's test only leaves the symbols behind. - `example3.png`](./example3.png)
 
+So... How do we get this cleaner output?  
+Well, when you pass in your text and the keywords you want to find, you can also pass in a boolean (a yes or no value) that indicates if you want to keep the clutter.  For backwards compatibility, this option is `true` (yes\*) by default.
 
 ## Bugs
  - [Version 0.01](https://github.com/CalinZBaenen/ParseJS/commit/2c45829fad3271c238963d8e3ec441b5df2144e6): Tokens aren't sorted in order of length, causing inaccuracies. - Fixed in [Version 0.02](https://github.com/CalinZBaenen/ParseJS/commit/7f9878e6f14daef1492ece3121b4e8f4ac6848fa).

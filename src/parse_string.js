@@ -20,17 +20,17 @@ const parse_string = function parse_string(str="", toks=null, iukwc=true) {
 	let parsed_array = new Array();
 	let tok_entpts = new Map();
 	for(let i = 0; i < toks.length; i++) {
-		const t = (
+		const tok = (
 			(typeof toks[i] === "symbol") ?
 			String(toks[i].description ?? "") :
 			toks[i]
 		);
-		if(t.length <= 0) continue;
-		if(tok_entpts.has(t[0])) {
-			const v = tok_entpts.get(t[0]);
-			if(v instanceof Array) v.push( t );
-			else tok_entpts.set(t[0], [v, t]);
-		} else tok_entpts.set(t[0], t);
+		if(tok.length <= 0) continue;
+		if( tok_entpts.has(tok[0]) ) {
+			const val = tok_entpts.get( tok[0] );
+			if(val instanceof Array) val.push( tok );
+			else tok_entpts.set(tok[0], [val, tok]);
+		} else tok_entpts.set(tok[0], tok);
 	}
 	for(const t of tok_entpts.values())
 		if(t instanceof Array) t.sort((x=null, y=null) => {

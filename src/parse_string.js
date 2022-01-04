@@ -32,8 +32,8 @@ const parse_string = function parse_string(str="", toks=null, iukwc=true) {
 			else tok_entpts.set(tok[0], [val, tok]);
 		} else tok_entpts.set(tok[0], tok);
 	}
-	for(const t of tok_entpts.values())
-		if(t instanceof Array) t.sort((x=null, y=null) => {
+	for(const tok of tok_entpts.values())
+		if(tok instanceof Array) tok.sort((x=null, y=null) => {
 			[x, y] = [x ?? "", y ?? ""];
 			return (y.length - x.length) || x.localeCompare(y);
 		});
@@ -41,21 +41,19 @@ const parse_string = function parse_string(str="", toks=null, iukwc=true) {
 	for(let i = 0; i < str.length; i++) {
 		const c = str[i];
 		if(tok_entpts.has(c)) {
-			const v = tok_entpts.get(c);
-			if(typeof v === "string") {
-				const slc = str.slice(i, i+v.length);
-				const tvs = slc === v;
-				if(tvs) {
+			const val = tok_entpts.get(c);
+			if(typeof val === "string") {
+				const slc = str.slice(i, i+val.length);
+				if(slc === val) {
 					parsed_array.push( Symbol.for(slc) );
-					i += v.length-1;
+					i += val.length-1;
 				} else parsed_array.push(c);
 			}
-			if(v instanceof Array) for(let i2 = 0; i2 < v.length; i2++) {
-				const tok = v[i2];
+			if(val instanceof Array) for(let i2 = 0; i2 < val.length; i2++) {
+				const tok = val[i2];
 				
 				const slc = str.slice(i, i+tok.length);
-				const tvs = slc === tok;
-				if(tvs) {
+				if(slc === val) {
 					parsed_array.push( Symbol.for(tok) );
 					i += tok.length-1;
 					break;

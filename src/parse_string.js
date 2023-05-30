@@ -7,60 +7,49 @@
 * used instead.
 * @param {string} str The string to scan.
 * @param {(string|symbol)[]} toks A list of possible tokens to find.
-* @param {boolean} iukwc Whether or not to include the left-over characters in the lexed array.
+* @param {boolean} includeUnknownChars Whether or not to include the left-over characters in the lexed array.
 * @return {(string|symbol)[]} A list representing the scanner's findings.
 */
-const parse_string = function parse_string(str="", toks=null, iukwc=true) {
-	if(
-		str.length <= 0 ||
-		(toks ?? null) === null ||
-		toks.length <= 0
-	) return new Array();
+const parse_string = function parse_string(str="", toks=null, includeUnknownChars=true) {
+	if(str.length === 0 || toks == null) return new Array();
 	
-	let parsed_array = new Array();
-	let tok_entpts = new Map();
-	for(let i = 0; i < toks.length; i++) {
-		const tok = (
-			(typeof toks[i] === "symbol") ?
-			String(toks[i].description ?? "") :
-			toks[i]
-		);
-		if(tok.length <= 0) continue;
-		if( tok_entpts.has(tok[0]) ) {
-			const val = tok_entpts.get( tok[0] );
-			if(val instanceof Array) val.push( tok );
-			else tok_entpts.set(tok[0], [val, tok]);
-		} else tok_entpts.set(tok[0], tok);
+	const parsedArray = new Array();  // The fully evaluated result.
+	const tokEntpts   = new Map();    // The token entrypoints (i.e. a map from the first character to a list of tokens).
+	
+	// Record the tokens.
+	for(const pptok of toks) {
+		const tok = String(typeof pptok === "symbol" ? pptok.description : pptok);
+		if(tok.length === 0) continue;
+		
+		if(tokEntpts.has( tok[0] )) tokEntpts.get( tok[0] ).push(tok);
+		else tokEntpts.set(tok[0], [tok]);
 	}
-	for(const tok of tok_entpts.values())
-		if(tok instanceof Array) tok.sort((x=null, y=null) => {
+	
+	// Sort the tokens.
+	for(const toklist of tokEntpts.values()) if(toklist?.length > 1)
+		toklist.sort((x=undefined, y=undefined)=>{
 			[x, y] = [x ?? "", y ?? ""];
-			return (y.length - x.length) || x.localeCompare(y);
+			return (y.length-x.length) || x.localeCompare(y);
 		});
 	
+	// Find the tokens.
 	for(let i = 0; i < str.length; i++) {
 		const c = str[i];
-		if(tok_entpts.has(c)) {
-			const val = tok_entpts.get(c);
-			if(typeof val === "string") {
-				const slc = str.slice(i, i+val.length);
-				if(slc === val) {
-					parsed_array.push( Symbol.for(slc) );
-					i += val.length-1;
-				} else parsed_array.push(c);
-			}
-			if(val instanceof Array) for(let i2 = 0; i2 < val.length; i2++) {
-				const tok = val[i2];
-				
-				const slc = str.slice(i, i+tok.length);
-				if(slc === val) {
-					parsed_array.push( Symbol.for(tok) );
+		
+		if( tokEntpts.has(c) ) {
+			
+			const toklist = tokEntpts.get(c);
+			for(let ti = 0; ti < toklist.length; ti++) {
+				const tok = toklist[ti];
+				if(str.slice(i, i+tok.length) === tok) {
+					parsedArray.push( Symbol.for(tok) );
 					i += tok.length-1;
 					break;
-				} else if(i2 >= v.length-1) parsed_array.push(c);
-			};
-		} else if(iukwc) parsed_array.push(c);
+				} else if(ti === toklist.length-1 && includeUnknownChars) parsedArray.push(c);
+			}
+			
+		} else if(includeUnknownChars) parsedArray.push(c);
 	}
 	
-	return parsed_array;
-}
+	return parsedArray;
+};
